@@ -7,18 +7,44 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B159EFC4280E2BCB0028B30E /* RealitySynth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B159EFC3280E2BCB0028B30E /* RealitySynth.swift */; };
 		B1BC45FA27F80F37002B248F /* Reality_SynthesizerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BC45F927F80F37002B248F /* Reality_SynthesizerApp.swift */; };
 		B1BC45FC27F80F37002B248F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BC45FB27F80F37002B248F /* ContentView.swift */; };
 		B1BC45FE27F80F38002B248F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1BC45FD27F80F38002B248F /* Assets.xcassets */; };
 		B1BC460127F80F38002B248F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1BC460027F80F38002B248F /* Preview Assets.xcassets */; };
+		B1BC461327F82B07002B248F /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = B1BC461227F82B07002B248F /* AudioKit */; };
+		B1BC461C27F844F5002B248F /* DunneAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = B1BC461B27F844F5002B248F /* DunneAudioKit */; };
+		B1BC461E27F8C336002B248F /* MIDIConductor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BC461D27F8C336002B248F /* MIDIConductor.swift */; };
+		B1BC462027F8C3B2002B248F /* MIDIConductor+MIDIListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BC461F27F8C3B2002B248F /* MIDIConductor+MIDIListener.swift */; };
+		B1BC462527F8C56F002B248F /* MIDIData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BC462427F8C56F002B248F /* MIDIData.swift */; };
+		B1BC462727F8C765002B248F /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BC462627F8C765002B248F /* CameraManager.swift */; };
+		B1BC462927F8C7AD002B248F /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BC462827F8C7AD002B248F /* CameraController.swift */; };
+		B1BC462D27F8C82E002B248F /* MetalEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BC462C27F8C82E002B248F /* MetalEnvironment.swift */; };
+		B1BC462F27F8C86F002B248F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BC462E27F8C86F002B248F /* Extensions.swift */; };
+		B1BC463327F8CA9E002B248F /* MetalContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BC463227F8CA9E002B248F /* MetalContentView.swift */; };
+		B1BC463527F8CF64002B248F /* shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = B1BC463427F8CF64002B248F /* shaders.metal */; };
+		B1BC463927F97D9B002B248F /* MetalTextureRadiateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BC463827F97D9A002B248F /* MetalTextureRadiateView.swift */; };
+		B1BC463B27F98D7A002B248F /* MetalPointCloudWaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BC463A27F98D7A002B248F /* MetalPointCloudWaveView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B159EFC3280E2BCB0028B30E /* RealitySynth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealitySynth.swift; sourceTree = "<group>"; };
 		B1BC45F627F80F37002B248F /* Reality Synthesizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Reality Synthesizer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1BC45F927F80F37002B248F /* Reality_SynthesizerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reality_SynthesizerApp.swift; sourceTree = "<group>"; };
 		B1BC45FB27F80F37002B248F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B1BC45FD27F80F38002B248F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B1BC460027F80F38002B248F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B1BC461D27F8C336002B248F /* MIDIConductor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MIDIConductor.swift; sourceTree = "<group>"; };
+		B1BC461F27F8C3B2002B248F /* MIDIConductor+MIDIListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MIDIConductor+MIDIListener.swift"; sourceTree = "<group>"; };
+		B1BC462427F8C56F002B248F /* MIDIData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MIDIData.swift; sourceTree = "<group>"; };
+		B1BC462627F8C765002B248F /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
+		B1BC462827F8C7AD002B248F /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
+		B1BC462C27F8C82E002B248F /* MetalEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalEnvironment.swift; sourceTree = "<group>"; };
+		B1BC462E27F8C86F002B248F /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		B1BC463227F8CA9E002B248F /* MetalContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalContentView.swift; sourceTree = "<group>"; };
+		B1BC463427F8CF64002B248F /* shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = shaders.metal; sourceTree = "<group>"; };
+		B1BC463827F97D9A002B248F /* MetalTextureRadiateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalTextureRadiateView.swift; sourceTree = "<group>"; };
+		B1BC463A27F98D7A002B248F /* MetalPointCloudWaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalPointCloudWaveView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +52,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1BC461327F82B07002B248F /* AudioKit in Frameworks */,
+				B1BC461C27F844F5002B248F /* DunneAudioKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,8 +79,11 @@
 		B1BC45F827F80F37002B248F /* Reality Synthesizer */ = {
 			isa = PBXGroup;
 			children = (
+				B1BC462127F8C553002B248F /* Helpers */,
+				B1BC462327F8C55B002B248F /* Models */,
+				B1BC462227F8C558002B248F /* Views */,
+				B1BC462E27F8C86F002B248F /* Extensions.swift */,
 				B1BC45F927F80F37002B248F /* Reality_SynthesizerApp.swift */,
-				B1BC45FB27F80F37002B248F /* ContentView.swift */,
 				B1BC45FD27F80F38002B248F /* Assets.xcassets */,
 				B1BC45FF27F80F38002B248F /* Preview Content */,
 			);
@@ -65,6 +96,55 @@
 				B1BC460027F80F38002B248F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B1BC462127F8C553002B248F /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				B1BC461D27F8C336002B248F /* MIDIConductor.swift */,
+				B1BC461F27F8C3B2002B248F /* MIDIConductor+MIDIListener.swift */,
+				B1BC462827F8C7AD002B248F /* CameraController.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		B1BC462227F8C558002B248F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B1BC45FB27F80F37002B248F /* ContentView.swift */,
+				B1BC462A27F8C80F002B248F /* Metal */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B1BC462327F8C55B002B248F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B1BC462627F8C765002B248F /* CameraManager.swift */,
+				B1BC462427F8C56F002B248F /* MIDIData.swift */,
+				B159EFC3280E2BCB0028B30E /* RealitySynth.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B1BC462A27F8C80F002B248F /* Metal */ = {
+			isa = PBXGroup;
+			children = (
+				B1BC462B27F8C816002B248F /* Shaders */,
+				B1BC463227F8CA9E002B248F /* MetalContentView.swift */,
+				B1BC462C27F8C82E002B248F /* MetalEnvironment.swift */,
+				B1BC463A27F98D7A002B248F /* MetalPointCloudWaveView.swift */,
+				B1BC463827F97D9A002B248F /* MetalTextureRadiateView.swift */,
+			);
+			path = Metal;
+			sourceTree = "<group>";
+		};
+		B1BC462B27F8C816002B248F /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				B1BC463427F8CF64002B248F /* shaders.metal */,
+			);
+			path = Shaders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +163,10 @@
 			dependencies = (
 			);
 			name = "Reality Synthesizer";
+			packageProductDependencies = (
+				B1BC461227F82B07002B248F /* AudioKit */,
+				B1BC461B27F844F5002B248F /* DunneAudioKit */,
+			);
 			productName = "Reality Synthesizer";
 			productReference = B1BC45F627F80F37002B248F /* Reality Synthesizer.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +195,10 @@
 				Base,
 			);
 			mainGroup = B1BC45ED27F80F37002B248F;
+			packageReferences = (
+				B1BC461127F82B07002B248F /* XCRemoteSwiftPackageReference "AudioKit" */,
+				B1BC461A27F844F5002B248F /* XCRemoteSwiftPackageReference "DunneAudioKit" */,
+			);
 			productRefGroup = B1BC45F727F80F37002B248F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -137,7 +225,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1BC463B27F98D7A002B248F /* MetalPointCloudWaveView.swift in Sources */,
+				B1BC462527F8C56F002B248F /* MIDIData.swift in Sources */,
+				B1BC462727F8C765002B248F /* CameraManager.swift in Sources */,
 				B1BC45FC27F80F37002B248F /* ContentView.swift in Sources */,
+				B1BC461E27F8C336002B248F /* MIDIConductor.swift in Sources */,
+				B1BC463927F97D9B002B248F /* MetalTextureRadiateView.swift in Sources */,
+				B1BC462F27F8C86F002B248F /* Extensions.swift in Sources */,
+				B1BC463327F8CA9E002B248F /* MetalContentView.swift in Sources */,
+				B1BC462027F8C3B2002B248F /* MIDIConductor+MIDIListener.swift in Sources */,
+				B1BC463527F8CF64002B248F /* shaders.metal in Sources */,
+				B1BC462D27F8C82E002B248F /* MetalEnvironment.swift in Sources */,
+				B159EFC4280E2BCB0028B30E /* RealitySynth.swift in Sources */,
+				B1BC462927F8C7AD002B248F /* CameraController.swift in Sources */,
 				B1BC45FA27F80F37002B248F /* Reality_SynthesizerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -270,11 +370,14 @@
 				DEVELOPMENT_TEAM = 25A3U75D5Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera is used to synthesize your reality";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -299,11 +402,14 @@
 				DEVELOPMENT_TEAM = 25A3U75D5Z;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera is used to synthesize your reality";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -339,6 +445,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B1BC461127F82B07002B248F /* XCRemoteSwiftPackageReference "AudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/AudioKit/";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		B1BC461A27F844F5002B248F /* XCRemoteSwiftPackageReference "DunneAudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/DunneAudioKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B1BC461227F82B07002B248F /* AudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B1BC461127F82B07002B248F /* XCRemoteSwiftPackageReference "AudioKit" */;
+			productName = AudioKit;
+		};
+		B1BC461B27F844F5002B248F /* DunneAudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B1BC461A27F844F5002B248F /* XCRemoteSwiftPackageReference "DunneAudioKit" */;
+			productName = DunneAudioKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B1BC45EE27F80F37002B248F /* Project object */;
 }
