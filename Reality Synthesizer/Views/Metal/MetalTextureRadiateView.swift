@@ -11,7 +11,7 @@ import MetalKit
 import Metal
 
 struct MetalTextureRadiateView: UIViewRepresentable, MetalRepresentable {
-    @Binding var depth0: Float
+    @Binding var depths: [Float]
     
     var rotationAngle: Double
     var capturedData: CameraCapturedData
@@ -59,10 +59,13 @@ final class MTKColorThresholdDepthTextureCoordinator: MTKCoordinator<MetalTextur
                                    -1,  1, 0, 1,
                                     1,  1, 0, 0]
         
-        var helper: Float = parent.depth0 * speedFactor
+        var radiateLocations: [Float] = parent.depths.map { $0 * speedFactor }
+        let radiateLocationsPseudoCount: Int = radiateLocations.count > 0 ? radiateLocations.count : 1
+        var radiateLocationsCount: Int = radiateLocations.count
         
         encoder.setVertexBytes(vertexData, length: vertexData.count * MemoryLayout<Float>.stride, index: 0)
-        encoder.setFragmentBytes(&helper, length: MemoryLayout<Float>.stride, index: 0)
+        encoder.setFragmentBytes(&radiateLocations, length: radiateLocationsPseudoCount * MemoryLayout<Float>.stride, index: 0)
+        encoder.setFragmentBytes(&radiateLocationsCount, length: MemoryLayout<Int>.stride, index: 1)
         encoder.setFragmentTexture(parent.capturedData.depth!, index: 2)
         encoder.setFragmentTexture(parent.capturedData.colorY!, index: 0)
         encoder.setFragmentTexture(parent.capturedData.colorCbCr!, index: 1)
@@ -72,6 +75,12 @@ final class MTKColorThresholdDepthTextureCoordinator: MTKCoordinator<MetalTextur
         encoder.endEncoding()
         commandBuffer.present(view.currentDrawable!)
         commandBuffer.commit()
-        parent.depth0 += 1
+        guard parent.depths.count > 0 else { return }
+        for depth in 0...(parent.depths.count - 1) {
+            parent.depths[depth] += 1
+            if parent.depths[depth] > 200 {
+                parent.depths.remove(at: depth)
+            }
+        }
     }
 }

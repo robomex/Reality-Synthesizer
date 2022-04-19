@@ -11,7 +11,7 @@ struct ContentView: View {
     @StateObject var conductor = MIDIConductor()
     @StateObject var manager = CameraManager()
     
-    @State private var depth0: Float = 0
+    @State private var depths: [Float] = [0]
     @State private var selectedSynth: RealitySynth = .radiate
     
     private var synths: [RealitySynth] = [.radiate, .wave]
@@ -21,13 +21,13 @@ struct ContentView: View {
             Group {
                 if selectedSynth == .radiate {
                     MetalTextureRadiateView(
-                        depth0: $depth0,
+                        depths: $depths,
                         rotationAngle: rotationAngle,
                         capturedData: manager.capturedData
                     )
                 } else if selectedSynth == .wave {
                     MetalPointCloudWaveView(
-                        depth0: $depth0,
+                        depths: $depths,
                         rotationAngle: rotationAngle,
                         capturedData: manager.capturedData
                     )
@@ -51,7 +51,7 @@ struct ContentView: View {
             }
         }
         .onChange(of: conductor.data.noteOn, perform: { newValue in
-            depth0 = 0
+            depths.insert(0, at: 0)
         })
         .onAppear {
             conductor.start()

@@ -11,7 +11,7 @@ import MetalKit
 import Metal
 
 struct MetalPointCloudWaveView: UIViewRepresentable, MetalRepresentable {
-    @Binding var depth0: Float
+    @Binding var depths: [Float]
     
     var rotationAngle: Double
     var capturedData: CameraCapturedData
@@ -104,7 +104,9 @@ final class MTKPointCloudCoordinator: MTKCoordinator<MetalPointCloudWaveView> {
         // Camera-intrinsics units are in full camera-resolution pixels.
 
         
-        var waveLocation: Float = parent.depth0 * waveSpeed
+        var waveLocations: [Float] = parent.depths.map { $0 * waveSpeed }
+        let waveLocationsPseudoCount: Int = waveLocations.count > 0 ? waveLocations.count : 1
+        var waveLocationsCount: Int = waveLocations.count
         
         let depthResolution = simd_float2(x: Float(parent.capturedData.depth!.width), y: Float(parent.capturedData.depth!.height))
         let scaleRes = simd_float2(x: Float( parent.capturedData.cameraReferenceDimensions.width) / depthResolution.x,
@@ -118,13 +120,20 @@ final class MTKPointCloudCoordinator: MTKCoordinator<MetalPointCloudWaveView> {
         var pmv = calcCurrentPMVMatrix(viewSize: CGSize(width: view.frame.size.width, height: view.frame.size.height))
         encoder.setVertexBytes(&pmv, length: MemoryLayout<matrix_float4x4>.stride, index: 0)
         encoder.setVertexBytes(&cameraIntrinsics, length: MemoryLayout<matrix_float3x3>.stride, index: 1)
-        encoder.setVertexBytes(&waveLocation, length: MemoryLayout<Float>.stride, index: 2)
+        encoder.setVertexBytes(&waveLocations, length: waveLocationsPseudoCount * MemoryLayout<Float>.stride, index: 2)
+        encoder.setVertexBytes(&waveLocationsCount, length: MemoryLayout<Int>.stride, index: 3)
         encoder.setRenderPipelineState(pipelineState)
         encoder.drawPrimitives(type: .point, vertexStart: 0, vertexCount: Int(depthResolution.x * depthResolution.y))
         encoder.endEncoding()
         commandBuffer.present(view.currentDrawable!)
         commandBuffer.commit()
-        parent.depth0 += 1
+        guard parent.depths.count > 0 else { return }
+        for depth in 0...(parent.depths.count - 1) {
+            parent.depths[depth] += 1
+            if parent.depths[depth] > 200 {
+                parent.depths.remove(at: depth)
+            }
+        }
     }
 }
 
