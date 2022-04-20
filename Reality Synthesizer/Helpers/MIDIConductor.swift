@@ -56,5 +56,6 @@ class MIDIConductor: ObservableObject {
 
     func stopNote(noteNumber: UInt8) {
         synth.stop(noteNumber: noteNumber)
+        data.noteOn = 0
     }
 }

@@ -12,6 +12,7 @@ import Metal
 
 struct MetalTextureRadiateView: UIViewRepresentable, MetalRepresentable {
     @Binding var depths: [Float]
+    @Binding var notes: [Int]
     
     var rotationAngle: Double
     var capturedData: CameraCapturedData
@@ -62,10 +63,14 @@ final class MTKColorThresholdDepthTextureCoordinator: MTKCoordinator<MetalTextur
         var radiateLocations: [Float] = parent.depths.map { $0 * speedFactor }
         let radiateLocationsPseudoCount: Int = radiateLocations.count > 0 ? radiateLocations.count : 1
         var radiateLocationsCount: Int = radiateLocations.count
+        var noteWidths: [Float] = parent.notes.map { abs((Float($0) - 95) / 95) }
+        var floatNotes: [Float] = parent.notes.map { Float($0) }
         
         encoder.setVertexBytes(vertexData, length: vertexData.count * MemoryLayout<Float>.stride, index: 0)
         encoder.setFragmentBytes(&radiateLocations, length: radiateLocationsPseudoCount * MemoryLayout<Float>.stride, index: 0)
         encoder.setFragmentBytes(&radiateLocationsCount, length: MemoryLayout<Int>.stride, index: 1)
+        encoder.setFragmentBytes(&floatNotes, length: radiateLocationsPseudoCount * MemoryLayout<Float>.stride, index: 2)
+        encoder.setFragmentBytes(&noteWidths, length: radiateLocationsPseudoCount * MemoryLayout<Float>.stride, index: 3)
         encoder.setFragmentTexture(parent.capturedData.depth!, index: 2)
         encoder.setFragmentTexture(parent.capturedData.colorY!, index: 0)
         encoder.setFragmentTexture(parent.capturedData.colorCbCr!, index: 1)
@@ -80,6 +85,8 @@ final class MTKColorThresholdDepthTextureCoordinator: MTKCoordinator<MetalTextur
             parent.depths[depth] += 1
             if parent.depths[depth] > 200 {
                 parent.depths.remove(at: depth)
+                parent.notes.remove(at: depth)
+                return
             }
         }
     }

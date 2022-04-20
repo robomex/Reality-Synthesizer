@@ -12,6 +12,7 @@ struct ContentView: View {
     @StateObject var manager = CameraManager()
     
     @State private var depths: [Float] = [0]
+    @State private var notes: [Int] = [0]
     @State private var selectedSynth: RealitySynth = .radiate
     
     private var synths: [RealitySynth] = [.radiate, .wave]
@@ -22,12 +23,14 @@ struct ContentView: View {
                 if selectedSynth == .radiate {
                     MetalTextureRadiateView(
                         depths: $depths,
+                        notes: $notes,
                         rotationAngle: rotationAngle,
                         capturedData: manager.capturedData
                     )
                 } else if selectedSynth == .wave {
                     MetalPointCloudWaveView(
                         depths: $depths,
+                        notes: $notes,
                         rotationAngle: rotationAngle,
                         capturedData: manager.capturedData
                     )
@@ -50,8 +53,10 @@ struct ContentView: View {
                 Spacer()
             }
         }
-        .onChange(of: conductor.data.noteOn, perform: { newValue in
+        .onChange(of: conductor.data.noteOn, perform: { newNote in
+            guard newNote != 0 else { return }
             depths.insert(0, at: 0)
+            notes.insert(newNote, at: 0)
         })
         .onAppear {
             conductor.start()

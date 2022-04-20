@@ -95,7 +95,9 @@ fragment half4 planeFragmentShaderColorRadiate(ColorInOut in [[stage_in]],
                                                texture2d<half> colorCbCrTexture [[ texture(1) ]],
                                                texture2d<float> depthTexture [[ texture(2) ]],
                                                constant float *depths [[buffer(0)]],
-                                               constant int &count [[ buffer(1) ]]
+                                               constant int &depthsCount [[ buffer(1) ]],
+                                               constant float *notes [[ buffer(2) ]],
+                                               constant float *noteWidths [[ buffer(3) ]]
                                                )
 {
     constexpr sampler textureSampler (mag_filter::linear,
@@ -106,19 +108,14 @@ fragment half4 planeFragmentShaderColorRadiate(ColorInOut in [[stage_in]],
     half4 rgbaResult = half4(y + 1.402h * uv.y, y - 0.7141h * uv.y - 0.3441h * uv.x, y + 1.772h * uv.x, 1.0h);
     float depth = depthTexture.sample(textureSampler, in.texCoord).r;
 
-    for (int i = 0; i < count; ++i )
+    for (int i = 0; i < depthsCount; ++i )
     {
-        if(depth > (depths[i] - 1.5) && depth < (depths[i] - 0.5))
+        if(depth > (depths[i] - noteWidths[i]) && depth < (depths[i] + noteWidths[i]))
         {
-            rgbaResult.y = rgbaResult.x / 2 ;
-        }
-        if(depth > (depths[i] - 0.5) && depth < (depths[i] + 0.5))
-        {
-            rgbaResult.xy = rgbaResult.z * 2 ;
-        }
-        if(depth > (depths[i] + 0.5) && depth < (depths[i] + 1.5))
-        {
-            rgbaResult.z = rgbaResult.x * 2 ;
+            half note = notes[i];
+            rgbaResult.x = rgbaResult.z / fmod(note, 5);
+            rgbaResult.y = rgbaResult.x * (fmod(note, 9) * 0.5);
+            rgbaResult.z = rgbaResult.y * (fmod(note, 7) * 0.5);
         }
     }
     return rgbaResult;
@@ -197,7 +194,8 @@ vertex ParticleVertexInOut pointCloudVertexWaveShader(
                                                       constant float4x4& viewMatrix [[ buffer(0) ]],
                                                       constant float3x3& cameraIntrinsics [[ buffer(1) ]],
                                                       constant float *depths [[buffer(2)]],
-                                                      constant int &count [[ buffer(3) ]],
+                                                      constant int &depthsCount [[ buffer(3) ]],
+                                                      constant float *notes [[ buffer(4) ]],
                                                       texture2d<half> colorYtexture [[ texture(1) ]],
                                                       texture2d<half> colorCbCrtexture [[ texture(2) ]]
                                                       )
@@ -219,11 +217,12 @@ vertex ParticleVertexInOut pointCloudVertexWaveShader(
     
     float megaDepth = depth / 1000.0f;
     
-    for (int i = 0; i < count; ++i )
+    for (int i = 0; i < depthsCount; ++i )
     {
         if(megaDepth > (depths[i] - 1.57) && megaDepth < (depths[i] + 1.57))
         {
-            xrw = xrw - (100 * cos(megaDepth - depths[i]));
+            half note = notes[i];
+            xrw = xrw - (100 * cos(megaDepth - depths[i]) * (2 / (note / 40)));
         }
     }
     

@@ -12,6 +12,7 @@ import Metal
 
 struct MetalPointCloudWaveView: UIViewRepresentable, MetalRepresentable {
     @Binding var depths: [Float]
+    @Binding var notes: [Int]
     
     var rotationAngle: Double
     var capturedData: CameraCapturedData
@@ -107,6 +108,7 @@ final class MTKPointCloudCoordinator: MTKCoordinator<MetalPointCloudWaveView> {
         var waveLocations: [Float] = parent.depths.map { $0 * waveSpeed }
         let waveLocationsPseudoCount: Int = waveLocations.count > 0 ? waveLocations.count : 1
         var waveLocationsCount: Int = waveLocations.count
+        var floatNotes: [Float] = parent.notes.map { Float($0) }
         
         let depthResolution = simd_float2(x: Float(parent.capturedData.depth!.width), y: Float(parent.capturedData.depth!.height))
         let scaleRes = simd_float2(x: Float( parent.capturedData.cameraReferenceDimensions.width) / depthResolution.x,
@@ -122,6 +124,7 @@ final class MTKPointCloudCoordinator: MTKCoordinator<MetalPointCloudWaveView> {
         encoder.setVertexBytes(&cameraIntrinsics, length: MemoryLayout<matrix_float3x3>.stride, index: 1)
         encoder.setVertexBytes(&waveLocations, length: waveLocationsPseudoCount * MemoryLayout<Float>.stride, index: 2)
         encoder.setVertexBytes(&waveLocationsCount, length: MemoryLayout<Int>.stride, index: 3)
+        encoder.setVertexBytes(&floatNotes, length: waveLocationsPseudoCount * MemoryLayout<Float>.stride, index: 4)
         encoder.setRenderPipelineState(pipelineState)
         encoder.drawPrimitives(type: .point, vertexStart: 0, vertexCount: Int(depthResolution.x * depthResolution.y))
         encoder.endEncoding()
@@ -132,6 +135,8 @@ final class MTKPointCloudCoordinator: MTKCoordinator<MetalPointCloudWaveView> {
             parent.depths[depth] += 1
             if parent.depths[depth] > 200 {
                 parent.depths.remove(at: depth)
+                parent.notes.remove(at: depth)
+                return
             }
         }
     }
