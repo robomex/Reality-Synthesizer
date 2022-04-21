@@ -1,27 +1,28 @@
 //
-//  MetalTextureColorThresholdDepthView.swift
+//  MetalTextureCycleView.swift
 //  Reality Synthesizer
 //
-//  Created by Tony Morales on 4/3/22.
+//  Created by Tony Morales on 4/20/22.
 //
 
 import SwiftUI
 import MetalKit
 
-struct MetalTextureRadiateView: UIViewRepresentable, MetalRepresentable {
+struct MetalTextureCycleView: UIViewRepresentable, MetalRepresentable {
     @Binding var depths: [Float]
     @Binding var notes: [Int]
     
     var rotationAngle: Double
     var capturedData: CameraCapturedData
 
-    func makeCoordinator() -> MTKRadiateTextureCoordinator {
-        MTKRadiateTextureCoordinator(parent: self)
+    func makeCoordinator() -> MTKCycleTextureCoordinator {
+        MTKCycleTextureCoordinator(parent: self)
     }
 }
 
-final class MTKRadiateTextureCoordinator: MTKCoordinator<MetalTextureRadiateView> {
+final class MTKCycleTextureCoordinator: MTKCoordinator<MetalTextureCycleView> {
     let speedFactor: Float = 0.1
+    var times: [Float] = []
     
     override func preparePipelineAndDepthState() {
         guard let metalDevice = mtkView.device else { fatalError("Expected a Metal device.") }
@@ -30,7 +31,7 @@ final class MTKRadiateTextureCoordinator: MTKCoordinator<MetalTextureRadiateView
             let pipelineDescriptor = MTLRenderPipelineDescriptor()
             pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
             pipelineDescriptor.vertexFunction = library.makeFunction(name: "planeVertexShader")
-            pipelineDescriptor.fragmentFunction = library.makeFunction(name: "planeFragmentShaderColorRadiate")
+            pipelineDescriptor.fragmentFunction = library.makeFunction(name: "planeFragmentShaderColorCycle")
             pipelineDescriptor.vertexDescriptor = createPlaneMetalVertexDescriptor()
             pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
             pipelineState = try metalDevice.makeRenderPipelineState(descriptor: pipelineDescriptor)
@@ -58,17 +59,14 @@ final class MTKRadiateTextureCoordinator: MTKCoordinator<MetalTextureRadiateView
                                    -1,  1, 0, 1,
                                     1,  1, 0, 0]
         
-        var radiateLocations: [Float] = parent.depths.map { $0 * speedFactor }
-        let radiateLocationsPseudoCount: Int = radiateLocations.count > 0 ? radiateLocations.count : 1
-        var radiateLocationsCount: Int = radiateLocations.count
-        var noteWidths: [Float] = parent.notes.map { abs((Float($0) - 95) / 95) }
         var floatNotes: [Float] = parent.notes.map { Float($0) }
+        let notesPseudoCount: Int = floatNotes.count > 0 ? floatNotes.count : 1
+        var notesCount: Int = floatNotes.count
         
         encoder.setVertexBytes(vertexData, length: vertexData.count * MemoryLayout<Float>.stride, index: 0)
-        encoder.setFragmentBytes(&radiateLocations, length: radiateLocationsPseudoCount * MemoryLayout<Float>.stride, index: 0)
-        encoder.setFragmentBytes(&radiateLocationsCount, length: MemoryLayout<Int>.stride, index: 1)
-        encoder.setFragmentBytes(&floatNotes, length: radiateLocationsPseudoCount * MemoryLayout<Float>.stride, index: 2)
-        encoder.setFragmentBytes(&noteWidths, length: radiateLocationsPseudoCount * MemoryLayout<Float>.stride, index: 3)
+        encoder.setFragmentBytes(&parent.depths, length: notesPseudoCount * MemoryLayout<Float>.stride, index: 0)
+        encoder.setFragmentBytes(&floatNotes, length: notesPseudoCount * MemoryLayout<Float>.stride, index: 1)
+        encoder.setFragmentBytes(&notesCount, length: MemoryLayout<Int>.stride, index: 2)
         encoder.setFragmentTexture(parent.capturedData.colorY!, index: 0)
         encoder.setFragmentTexture(parent.capturedData.colorCbCr!, index: 1)
         encoder.setFragmentTexture(parent.capturedData.depth!, index: 2)
@@ -78,14 +76,11 @@ final class MTKRadiateTextureCoordinator: MTKCoordinator<MetalTextureRadiateView
         encoder.endEncoding()
         commandBuffer.present(view.currentDrawable!)
         commandBuffer.commit()
+        
         guard parent.depths.count > 0 else { return }
         for depth in 0...(parent.depths.count - 1) {
             parent.depths[depth] += 1
-            if parent.depths[depth] > 200 {
-                parent.depths.remove(at: depth)
-                parent.notes.remove(at: depth)
-                return
-            }
         }
     }
 }
+

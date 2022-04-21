@@ -5,10 +5,8 @@
 //  Created by Tony Morales on 4/3/22.
 //
 
-import Foundation
 import SwiftUI
 import MetalKit
-import Metal
 
 struct MetalPointCloudWaveView: UIViewRepresentable, MetalRepresentable {
     @Binding var depths: [Float]
@@ -17,12 +15,12 @@ struct MetalPointCloudWaveView: UIViewRepresentable, MetalRepresentable {
     var rotationAngle: Double
     var capturedData: CameraCapturedData
     
-    func makeCoordinator() -> MTKPointCloudCoordinator {
-        MTKPointCloudCoordinator(parent: self)
+    func makeCoordinator() -> MTKPointCloudWaveCoordinator {
+        MTKPointCloudWaveCoordinator(parent: self)
     }
 }
 
-final class MTKPointCloudCoordinator: MTKCoordinator<MetalPointCloudWaveView> {
+final class MTKPointCloudWaveCoordinator: MTKCoordinator<MetalPointCloudWaveView> {
     let waveSpeed: Float = 0.1
     
     override func preparePipelineAndDepthState() {

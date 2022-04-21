@@ -11,16 +11,23 @@ struct ContentView: View {
     @StateObject var conductor = MIDIConductor()
     @StateObject var manager = CameraManager()
     
-    @State private var depths: [Float] = [0]
-    @State private var notes: [Int] = [0]
-    @State private var selectedSynth: RealitySynth = .radiate
+    @State private var depths: [Float] = []
+    @State private var notes: [Int] = []
+    @State private var selectedSynth: RealitySynth = .cycle
     
-    private var synths: [RealitySynth] = [.radiate, .wave]
+    private var synths: [RealitySynth] = [.cycle, .radiate, .wave]
     
     var body: some View {
         ZStack {
             Group {
-                if selectedSynth == .radiate {
+                if selectedSynth == .cycle {
+                    MetalTextureCycleView(
+                        depths: $depths,
+                        notes: $notes,
+                        rotationAngle: rotationAngle,
+                        capturedData: manager.capturedData
+                    )
+                } else if selectedSynth == .radiate {
                     MetalTextureRadiateView(
                         depths: $depths,
                         notes: $notes,
@@ -57,6 +64,30 @@ struct ContentView: View {
             guard newNote != 0 else { return }
             depths.insert(0, at: 0)
             notes.insert(newNote, at: 0)
+        })
+        .onChange(of: selectedSynth, perform: { newSynth in
+            if newSynth == .cycle {
+                depths.removeAll()
+                notes.removeAll()
+            }
+        })
+        .onChange(of: conductor.data.noteOff, perform: { noteTurnedOff in
+            guard noteTurnedOff != 0 else { return }
+            if selectedSynth == .cycle,
+               let index = notes.firstIndex(of: noteTurnedOff)
+            {
+                notes.remove(at: index)
+                depths.remove(at: index)
+                // ATM NOTE (4/20/22): Notes can get "stuck" when conductor.data.noteOff is
+                // written to multiple times in the same frame (e.g. two keys are released at
+                // approximately the same time). This workaround will "release" the stuck key
+                // with a subsequent release of that same key. This is a very ugly fix – but an
+                // actual, robust fix didn't come to me immediately.
+                if let stuckIndexWorkaround = notes.firstIndex(of: noteTurnedOff) {
+                    notes.remove(at: stuckIndexWorkaround)
+                    depths.remove(at: stuckIndexWorkaround)
+                }
+            }
         })
         .onAppear {
             conductor.start()

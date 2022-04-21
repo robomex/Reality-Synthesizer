@@ -51,8 +51,9 @@ class MIDIConductor: ObservableObject {
     // MARK: -  Synth Methods
     
     func playNote(noteNumber: UInt8, velocity: UInt8) {
-         synth.play(noteNumber: noteNumber, velocity: velocity)
-       }
+        synth.play(noteNumber: noteNumber, velocity: velocity)
+        data.noteOff = 0
+    }
 
     func stopNote(noteNumber: UInt8) {
         synth.stop(noteNumber: noteNumber)
