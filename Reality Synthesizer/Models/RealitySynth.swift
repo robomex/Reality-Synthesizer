@@ -8,6 +8,7 @@
 import Foundation
 
 enum RealitySynth: String {
+    case crazy
     case cycle
     case radiate
     case wave

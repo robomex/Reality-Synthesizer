@@ -144,9 +144,61 @@ fragment half4 planeFragmentShaderColorCycle(ColorInOut in [[stage_in]],
     {
         float index = fmod(notes[i], 7);
         float depthMod = fmod(depth, 20);
-            rgbaResult.x = (rgbaResult.x * index - depthMod + (times[i] / depth / 100) * sin(times[i] / 200 * index));
-            rgbaResult.y = (rgbaResult.y * index - depthMod + (times[i] / depth / 100)) * cos(times[i] / 200 * index);
-            rgbaResult.z = (rgbaResult.z * index - depthMod + (times[i] / depth / 100)) * sin(times[i] / 200 * index);
+        rgbaResult.x = (rgbaResult.x * index / depthMod - (times[i] / 50) * sin(times[i] / 100 * index));
+        rgbaResult.y = (rgbaResult.y - index / depthMod + (times[i] / 50)) * tan(times[i] / 100 - index);
+        rgbaResult.z = (rgbaResult.z * index * depthMod + (times[i] / 50)) * cos(times[i] / 100 + index);
+    }
+    return rgbaResult;
+}
+
+// MARK: - Crazy
+
+fragment half4 planeFragmentShaderColorCrazy(ColorInOut in [[stage_in]],
+                                             texture2d<half> colorYTexture [[ texture(0) ]],
+                                             texture2d<half> colorCbCrTexture [[ texture(1) ]],
+                                             texture2d<float> depthTexture [[ texture(2) ]],
+                                             constant float *times [[buffer(0)]],
+                                             constant float *notes [[ buffer(1) ]],
+                                             constant int &notesCount [[ buffer(2) ]]
+                                             )
+{
+    constexpr sampler textureSampler (mag_filter::linear,
+                                      min_filter::linear);
+    half y = colorYTexture.sample(textureSampler, in.texCoord).r;
+    half2 uv = colorCbCrTexture.sample(textureSampler, in.texCoord).rg - half2(0.5h, 0.5h);
+    // Convert YUV to RGB inline.
+    half4 rgbaResult = half4(y + 1.402h * uv.y, y - 0.7141h * uv.y - 0.3441h * uv.x, y + 1.772h * uv.x, 1.0h);
+    float depth = depthTexture.sample(textureSampler, in.texCoord).r;
+
+    half3 colors[] = {
+        half3(0.2, 0.0, 0.0),
+        half3(1.0, 0.0, 0.0),
+        half3(0.0, 1.0, 0.0),
+        half3(0.3, 0.3, 0.6),
+        half3(0.0, 0.0, 0.8),
+        half3(1.0, 0.0, 0.8),
+        half3(0.0, 1.0, 0.8),
+        half3(0.0, 0.0, 1.0),
+    };
+    
+    for (int i = 0; i < notesCount; ++i )
+    {
+        float index = fmod(notes[i], 7) + 1;
+        float depthMod = fmod(times[i] / 100, index);
+        
+        if (depth > (index) && depth < (depthMod + index))
+        {
+            float color = (rgbaResult.x + rgbaResult.y + rgbaResult.z) / 2.0 * times[i] / 50;
+            int index = int(color * 3.0);
+            rgbaResult.xyz = colors[index].xyz;
+        } else if (depth > (index / 2) && depth < (index * 2))
+        {
+            rgbaResult.x = (1 - rgbaResult.x + (times[i] / 700));
+        } else {
+            rgbaResult.x = fmod(depth, depthMod) * rgbaResult.x / cos(times[i] / 100);
+            rgbaResult.y = fmod(depthMod, depth) / rgbaResult.y / sin(times[i] / 100);
+            rgbaResult.z = fmod(index, depth) + rgbaResult.z / tan(times[i] / 100);
+        }
     }
     return rgbaResult;
 }

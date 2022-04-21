@@ -1,26 +1,26 @@
 //
-//  MetalTextureCycleView.swift
+//  MetalTextureCrazyView.swift
 //  Reality Synthesizer
 //
-//  Created by Tony Morales on 4/20/22.
+//  Created by Tony Morales on 4/21/22.
 //
 
 import SwiftUI
 import MetalKit
 
-struct MetalTextureCycleView: UIViewRepresentable, MetalRepresentable {
+struct MetalTextureCrazyView: UIViewRepresentable, MetalRepresentable {
     @Binding var depths: [Float]
     @Binding var notes: [Int]
     
     var rotationAngle: Double
     var capturedData: CameraCapturedData
 
-    func makeCoordinator() -> MTKCycleTextureCoordinator {
-        MTKCycleTextureCoordinator(parent: self)
+    func makeCoordinator() -> MTKCrazyTextureCoordinator {
+        MTKCrazyTextureCoordinator(parent: self)
     }
 }
 
-final class MTKCycleTextureCoordinator: MTKCoordinator<MetalTextureCycleView> {
+final class MTKCrazyTextureCoordinator: MTKCoordinator<MetalTextureCrazyView> {
     override func preparePipelineAndDepthState() {
         guard let metalDevice = mtkView.device else { fatalError("Expected a Metal device.") }
         do {
@@ -28,7 +28,7 @@ final class MTKCycleTextureCoordinator: MTKCoordinator<MetalTextureCycleView> {
             let pipelineDescriptor = MTLRenderPipelineDescriptor()
             pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
             pipelineDescriptor.vertexFunction = library.makeFunction(name: "planeVertexShader")
-            pipelineDescriptor.fragmentFunction = library.makeFunction(name: "planeFragmentShaderColorCycle")
+            pipelineDescriptor.fragmentFunction = library.makeFunction(name: "planeFragmentShaderColorCrazy")
             pipelineDescriptor.vertexDescriptor = createPlaneMetalVertexDescriptor()
             pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
             pipelineState = try metalDevice.makeRenderPipelineState(descriptor: pipelineDescriptor)

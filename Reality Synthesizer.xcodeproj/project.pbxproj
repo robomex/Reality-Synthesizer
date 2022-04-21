@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		B159EFC4280E2BCB0028B30E /* RealitySynth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B159EFC3280E2BCB0028B30E /* RealitySynth.swift */; };
 		B159EFC628106B2D0028B30E /* MetalTextureCycleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B159EFC528106B2D0028B30E /* MetalTextureCycleView.swift */; };
+		B1B90490281120410027DEE4 /* MetalTextureCrazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B9048F281120410027DEE4 /* MetalTextureCrazyView.swift */; };
 		B1BC45FA27F80F37002B248F /* Reality_SynthesizerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BC45F927F80F37002B248F /* Reality_SynthesizerApp.swift */; };
 		B1BC45FC27F80F37002B248F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BC45FB27F80F37002B248F /* ContentView.swift */; };
 		B1BC45FE27F80F38002B248F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1BC45FD27F80F38002B248F /* Assets.xcassets */; };
@@ -31,6 +32,7 @@
 /* Begin PBXFileReference section */
 		B159EFC3280E2BCB0028B30E /* RealitySynth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealitySynth.swift; sourceTree = "<group>"; };
 		B159EFC528106B2D0028B30E /* MetalTextureCycleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalTextureCycleView.swift; sourceTree = "<group>"; };
+		B1B9048F281120410027DEE4 /* MetalTextureCrazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalTextureCrazyView.swift; sourceTree = "<group>"; };
 		B1BC45F627F80F37002B248F /* Reality Synthesizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Reality Synthesizer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1BC45F927F80F37002B248F /* Reality_SynthesizerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reality_SynthesizerApp.swift; sourceTree = "<group>"; };
 		B1BC45FB27F80F37002B248F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				B1BC463227F8CA9E002B248F /* MetalContentView.swift */,
 				B1BC462C27F8C82E002B248F /* MetalEnvironment.swift */,
 				B1BC463A27F98D7A002B248F /* MetalPointCloudWaveView.swift */,
+				B1B9048F281120410027DEE4 /* MetalTextureCrazyView.swift */,
 				B159EFC528106B2D0028B30E /* MetalTextureCycleView.swift */,
 				B1BC463827F97D9A002B248F /* MetalTextureRadiateView.swift */,
 			);
@@ -242,6 +245,7 @@
 				B1BC462D27F8C82E002B248F /* MetalEnvironment.swift in Sources */,
 				B159EFC4280E2BCB0028B30E /* RealitySynth.swift in Sources */,
 				B1BC462927F8C7AD002B248F /* CameraController.swift in Sources */,
+				B1B90490281120410027DEE4 /* MetalTextureCrazyView.swift in Sources */,
 				B1BC45FA27F80F37002B248F /* Reality_SynthesizerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -13,14 +13,21 @@ struct ContentView: View {
     
     @State private var depths: [Float] = []
     @State private var notes: [Int] = []
-    @State private var selectedSynth: RealitySynth = .cycle
+    @State private var selectedSynth: RealitySynth = .crazy
     
-    private var synths: [RealitySynth] = [.cycle, .radiate, .wave]
+    private var synths: [RealitySynth] = [.crazy, .cycle, .radiate, .wave]
     
     var body: some View {
         ZStack {
             Group {
-                if selectedSynth == .cycle {
+                if selectedSynth == .crazy {
+                    MetalTextureCrazyView(
+                        depths: $depths,
+                        notes: $notes,
+                        rotationAngle: rotationAngle,
+                        capturedData: manager.capturedData
+                    )
+                } else if selectedSynth == .cycle {
                     MetalTextureCycleView(
                         depths: $depths,
                         notes: $notes,
@@ -66,14 +73,14 @@ struct ContentView: View {
             notes.insert(newNote, at: 0)
         })
         .onChange(of: selectedSynth, perform: { newSynth in
-            if newSynth == .cycle {
+            if newSynth == .cycle || newSynth == .crazy {
                 depths.removeAll()
                 notes.removeAll()
             }
         })
         .onChange(of: conductor.data.noteOff, perform: { noteTurnedOff in
             guard noteTurnedOff != 0 else { return }
-            if selectedSynth == .cycle,
+            if (selectedSynth == .cycle || selectedSynth == .crazy),
                let index = notes.firstIndex(of: noteTurnedOff)
             {
                 notes.remove(at: index)
