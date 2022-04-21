@@ -15,13 +15,13 @@ class MIDIConductor: ObservableObject {
     let engine = AudioEngine()
     let midi = MIDI()
     let synth = Synth(masterVolume: 0.5,
-                      pitchBend: 0.0,
+                      pitchBend: 1.0,
                       vibratoDepth: 0.0,
-                      filterCutoff: 2.0,
-                      filterStrength: 0.5,
+                      filterCutoff: 1.0,
+                      filterStrength: 1.0,
                       filterResonance: 0.0,
                       attackDuration: 0.1,
-                      decayDuration: 0.0,
+                      decayDuration: 0.5,
                       sustainLevel: 1.0,
                       releaseDuration: 0.2,
                       filterEnable: true)
