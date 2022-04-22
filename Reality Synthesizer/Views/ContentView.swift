@@ -63,7 +63,6 @@ struct ContentView: View {
                 .padding(.top, 50)
                 .padding(.trailing, 60)
                 
-                Text("Note: \(conductor.data.noteOn)")
                 Spacer()
             }
         }
