@@ -4,4 +4,6 @@ a paired synthesizer are interpreted by Metal shaders to produce augmented reali
 [Capturing Depth Using the LiDAR Camera](https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/capturing_depth_using_the_lidar_camera), 
 [AudioKit](https://github.com/AudioKit/AudioKit), and [Linnstrument Helper](https://github.com/markjamesm/linnstrument-helper). 
 
+The demo with sound can be viewed at [this tweet](https://twitter.com/robomex/status/1517539987436314626).
+
 ![Reality Synthesizer Demo Gif](https://github.com/robomex/Reality-Synthesizer/blob/main/Reality-Synthesizer-Demo.gif)
